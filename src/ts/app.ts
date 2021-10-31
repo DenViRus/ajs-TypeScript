@@ -22,3 +22,8 @@ cart.add(
 );
 
 console.log(cart.items);
+console.log(cart.getSum());
+console.log(cart.getSumWithDiscount(10));
+
+cart.deleteItem(1001);
+console.log(cart.items);
