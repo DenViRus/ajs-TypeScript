@@ -1,36 +1,36 @@
-import {Buyable} from '../domain/Buyable';
+import { Buyable } from "../domain/Buyable";
 
 export class Cart {
-    private _items: Buyable[] = [];
+  private _items: Buyable[] = [];
 
-    add(item: Buyable): void {
-        this._items.push(item);
-    }
+  add(item: Buyable): void {
+    this._items.push(item);
+  }
 
-    get items(): Buyable[] {
-        return [...this._items]; 
-    }
+  get items(): Buyable[] {
+    return [...this._items];
+  }
 
-    getSum(): number {
-      let sum: number = 0; 
-      for (let item of this._items) {
-        sum += item.price;
-      }
-      return sum;
-    }
+  getSum(): number {
+    return this._items.reduce(
+      (accum: number, current: Buyable) => accum + current.price,
+      0
+    );
+  }
 
-    getSumWithDiscount(discount: number): number {
-      const sum = this.getSum();
-      const sumWithDiscount = sum - (sum * discount / 100);
-      return sumWithDiscount;
-    }
+  getSumWithDiscount(discount: number): number {
+    const sum: number = this.getSum();
+    return sum - (sum * discount) / 100;
+  }
 
-    deleteItem(id: number): void {
-      const itemId: number = this._items.findIndex(item => item.id === id);
-      if (itemId === -1) {
-        throw new Error('Product with this ID was not found');
-      } else {
-        this._items.splice(itemId, 1);   
-      }
+  deleteItem(id: number): void {
+    const itemId: number = this._items.findIndex(
+      (item: Buyable) => item.id === id
+    );
+    if (itemId === -1) {
+      throw new Error("Product with this ID was not found");
+    } else {
+      this._items.splice(itemId, 1);
     }
+  }
 }
